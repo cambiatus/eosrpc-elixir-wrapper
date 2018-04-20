@@ -7,7 +7,7 @@ defmodule EOSRPC.Chain do
 
   import EOSRPC
 
-  @doc"""
+  @doc """
   Get latest information related to a node
   """
   def get_info, do: url("/get_info") |> get_request()
@@ -19,21 +19,21 @@ defmodule EOSRPC.Chain do
     "/get_block" |> url() |> post_request(%{block_num_or_id: block_num_or_id})
   end
 
-  @doc"""
+  @doc """
   Get information related to an account.
   """
   def get_account(account_name) do
     "/get_account" |> url() |> post_request(%{account_name: account_name})
   end
 
-  @doc"""
+  @doc """
   Fetch smart contract code.
   """
   def get_code(account_name) do
     "/get_code" |> url() |> post_request(%{account_name: account_name})
   end
 
-  @doc"""
+  @doc """
   Fetch smart contract data from an account.
   """
   def get_table_rows(scope, code, table, json) do
@@ -47,7 +47,7 @@ defmodule EOSRPC.Chain do
     "/get_table_rows" |> url() |> post_request(data)
   end
 
-  @doc"""
+  @doc """
   Get required keys to sign a transaction from list of your keys.
   """
   def get_required_keys(transaction_data, available_keys) do
@@ -59,7 +59,7 @@ defmodule EOSRPC.Chain do
     "/get_required_keys" |> url() |> post_request(data)
   end
 
-  @doc"""
+  @doc """
   Serialize json to binary hex. The resulting binary hex is usually used
   for the data field in push_transaction.
   """
@@ -67,14 +67,14 @@ defmodule EOSRPC.Chain do
     "/abi_json_to_bin" |> url() |> post_request(%{code: code, action: action, args: args})
   end
 
-  @doc"""
+  @doc """
   Serialize back binary hex to json.
   """
   def abi_bin_to_json(code, action, binargs) do
     "/abi_bin_to_json" |> url() |> post_request(%{code: code, action: action, binargs: binargs})
   end
 
-  @doc"""
+  @doc """
   This method expects a transaction in JSON format and will attempt to apply it to the blockchain,
 
   `signed_transaction` should be a map like this JSON:

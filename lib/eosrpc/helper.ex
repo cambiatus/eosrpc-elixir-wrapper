@@ -10,6 +10,9 @@ defmodule EOSRPC.Helper do
   on your daily basis
   """
 
+  alias EOSRPC.Chain
+  alias EOSRPC.Wallet
+
   @doc """
   Retrieves the next minute - used mostly for expiration dates of transactions
   """
@@ -25,43 +28,39 @@ defmodule EOSRPC.Helper do
   def actions_to_bin(actions) do
     final_actions =
       actions
-      |> Enum.map(
-           fn i ->
-             response = EOSRPC.Chain.abi_json_to_bin(i[:account], i[:name], i[:data])
-             case response do
-               {:ok, bin} -> %{i | data: bin["binargs"]}
-               _ ->
-                 IO.inspect(i)
-                 response
-             end
-           end
-         )
+      |> Enum.map(fn i ->
+        response = Chain.abi_json_to_bin(i[:account], i[:name], i[:data])
+
+        case response do
+          {:ok, bin} ->
+            %{i | data: bin["binargs"]}
+
+          _ ->
+            response
+        end
+      end)
 
     errors =
       final_actions
-      |> Enum.filter(
-           fn i ->
-             case i do
-               {:error, _} -> true
-               _ -> false
-             end
-           end
-         )
+      |> Enum.filter(fn i ->
+        case i do
+          {:error, _} -> true
+          _ -> false
+        end
+      end)
 
     if length(errors) > 0, do: {:error, errors}, else: {:ok, final_actions}
-
   end
 
   @doc """
   Identify the required keys for the transaction and sign with them
   """
   def sign_transaction(trx_data) do
+    {:ok, public_keys} = Wallet.get_public_keys()
 
-    {:ok, public_keys} = EOSRPC.Wallet.get_public_keys()
+    {:ok, keys} = Chain.get_required_keys(trx_data, public_keys)
 
-    {:ok, keys} = EOSRPC.Chain.get_required_keys(trx_data, public_keys)
-
-    EOSRPC.Wallet.sign_transaction(trx_data, keys["required_keys"])
+    Wallet.sign_transaction(trx_data, keys["required_keys"])
   end
 
   @doc """
@@ -74,22 +73,22 @@ defmodule EOSRPC.Helper do
       context_free_data: [],
       transaction: trx_data
     }
-    EOSRPC.Chain.push_transaction(final_trx_data)
+
+    Chain.push_transaction(final_trx_data)
   end
 
   @doc """
   Get the current irreversible block data from the chain
   """
   def current_irreversible_block do
-    {:ok, chain} = EOSRPC.Chain.get_info()
-    EOSRPC.Chain.get_block(chain["last_irreversible_block_num"])
+    {:ok, chain} = Chain.get_info()
+    Chain.get_block(chain["last_irreversible_block_num"])
   end
 
   @doc """
   Creates a new account - exactly like cleos
   """
   def new_account(creator, new_account, owner_key, active_key) do
-
     authorization = %{
       actor: creator,
       permission: "active"
@@ -170,5 +169,4 @@ defmodule EOSRPC.Helper do
       error -> error
     end
   end
-
 end
