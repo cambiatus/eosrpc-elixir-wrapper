@@ -26,6 +26,7 @@ defmodule EOSRPC.Mixfile do
       {:tesla, "1.0.0-beta.1"},
       {:jason, ">= 1.0.0"},
       {:timex, "~> 3.1"},
+      {:ex_doc, ">= 0.0.0", only: :dev},
 
       # dev
       {:credo, "~> 0.9", only: [:dev, :test], runtime: false}
@@ -37,7 +38,7 @@ defmodule EOSRPC.Mixfile do
       name: "eosrpc",
       files: ["lib", "test", "mix.exs", "README.md", "LICENSE*"],
       licenses: ["GNU GPLv3"],
-      links: ["https://github.com/BeSpiral/eosrpc-elixir-wrapper"],
+      links: %{"Github" => "https://github.com/BeSpiral/eosrpc-elixir-wrapper"},
       maintainers: ["Leo Ribeiro", "Julien Lucca"]
     ]
   end
