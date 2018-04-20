@@ -7,70 +7,112 @@ defmodule EOSRPC.Wallet do
 
   import EOSRPC
 
-  use Tesla
+  @doc """
+  List all wallets
+  """
+  def list, do: "/list_wallets" |> url() |> get_request()
 
-  plug(Tesla.Middleware.BaseUrl, base_url())
-  plug(Tesla.Middleware.JSON)
+  @doc """
+  Lock all wallets
+  """
+  def lock_all, do: "/lock_all" |> url() |> get_request()
 
-  def list, do: get_request("/list_wallets")
+  @doc """
+  List all public keys across all wallets
+  """
+  def get_public_keys, do: "/get_public_keys" |> url() |> get_request()
 
-  def lock_all, do: get_request("/lock_all")
+  @doc """
+  List all key pairs across all wallets
+  """
+  def list_keys, do: "/list_keys" |> url() |> get_request()
 
-  def get_public_keys, do: get_request("/get_public_keys")
+  @doc """
+  Create a new wallet with the given name
+  """
+  def create(name), do: "/create" |> url() |> post_request(name, true)
 
-  def list_keys, do: get_request("/list_keys")
+  @doc """
+  Open an existing wallet of the given name
+  """
+  def open(name), do: "/open" |> url() |> post_request(name, true)
 
-  def create(name), do: post_request("/create", name, true)
+  @doc """
+  Lock a wallet of the given name
+  """
+  def lock(name), do: "/lock" |> url() |> post_request(name, true)
 
-  def open(name), do: post_request("/open", name, true)
-
-  def lock(name), do: post_request("/lock", name, true)
-
+  @doc """
+  Unlock a wallet with the given name and password
+  """
   def unlock(name, password) do
-    post_request("/unlock", [name, password])
+    "/unlock"
+    |> url()
+    |> post_request([name, password])
   end
 
+  @doc """
+  Import a private key to the wallet of the given name
+  """
   def import_key(name, key) do
-    post_request("/import_key", [name, key])
+    "/import_key"
+    |> url()
+    |> post_request([name, key])
   end
 
-  def set_timeout(timeout), do: post_request("/set_timeout", timeout)
+  @doc """
+  Set wallet auto lock timeout (in seconds)
+  """
+  def set_timeout(timeout_secs), do: "/set_timeout" |> url() |> post_request(timeout_secs)
 
-  def sign_transaction(
-        ref_block_num,
-        ref_block_prefix,
-        expiration,
-        scope,
-        read_scope,
-        messages,
-        signatures,
-        keys,
-        unknown
-      ) do
-    # TODO: whats this unknown parameter?
+  @doc """
+  Sign transaction given an array of transaction, require public keys, and chain id
 
-    data = [
-      %{
-        ref_block_num: ref_block_num,
-        ref_block_prefix: ref_block_prefix,
-        expiration: expiration || one_minute_from_now(),
-        scope: scope,
-        read_scope: read_scope || [],
-        messages: messages,
-        signatures: signatures || []
-      },
-      keys,
-      unknown || ""
-    ]
+  `transaction` structure should be a map like this json:
+  {
+    "signatures": [
+      "EOSKZ4pTehVfqs92wujRp34qRAvUjKJrUyufZfJDo9fdBLzhieyfUSUJpKz1Z12rxh1gTQZ4BcWvKourzxCLb2fMsvN898KSn"
+    ],
+    "compression": "none",
+    "context_free_data": [],
+    "transaction": {
+      "region": 0,
+      "ref_block_num": "32697",
+      "ref_block_prefix": "32649",
+      "expiration": "2018-09-25T06:28:49",
+      "max_net_usage_words": 0,
+      "max_kcpu_usage": 0,
+      "delay_sec": 0,
+      "context_free_actions": [],
+      "actions": [
+        {
+          "account": "eoseco",
+          "name": "transfer",
+          "authorization": [
+            {
+              "actor": "eoseco",
+              "permission": "active"
+            }
+          ],
+          "data": "0000000050a430550000000000003ab60a000000000000000045434f0000000000"
+        }
+      ]
+    }
+  }
 
-    post_request("/sign_transaction", data)
+  `keys` should be a list of public keys
+
+  `chain_id` (optional)
+
+  """
+  def sign_transaction(transaction, keys), do: sign_transaction(transaction, keys, "")
+
+  def sign_transaction(transaction, keys, chain_id) do
+    "/sign_transaction"
+    |> url()
+    |> post_request([transaction, keys, chain_id])
   end
 
-  def one_minute_from_now do
-    Timex.now()
-    |> Timex.shift(minutes: 1)
-    |> Timex.format!("%FT%T", :strftime)
-  end
-
-  def base_url(), do: :eosrpc |> Application.get_env(__MODULE__) |> Keyword.get(:url)
+  def url(url),
+    do: :eosrpc |> Application.get_env(__MODULE__) |> Keyword.get(:url) |> Kernel.<>(url)
 end

@@ -1,11 +1,12 @@
 # EOSRPC
 
-**TODO: Add description**
+Simple EOSRPC Wrapper for Elixir. 
+Based on [EOS RPC Official Docs](https://eosio.github.io/eos/group__eosiorpc.html)
+
+For real examples check EOSRPC.Helper - You can also use it on your 
+application to create accounts and automatically sign transactions.
 
 ## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `eosrpc` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
@@ -15,7 +16,14 @@ def deps do
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/eosrpc](https://hexdocs.pm/eosrpc).
+You need to setup the Chain and Wallet URLs. This is the default configuration:
+
+```elixir
+config :eosrpc, EOSRPC.Wallet,
+  url: "http://127.0.0.1:8999/v1/wallet"
+
+config :eosrpc, EOSRPC.Chain,
+  url: "http://127.0.0.1:8888/v1/chain"
+```
+
 
