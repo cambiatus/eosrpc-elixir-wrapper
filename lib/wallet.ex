@@ -13,14 +13,17 @@ defmodule EOSRPC.Wallet do
   defp base_url(), do: Application.get_env(:eosrpc, :wallet)
 
   defp get_request(url) do
-    get!(url)
-      |> EOSRPC.validate_request
+    url
+    |> get!()
+    |> EOSRPC.validate_request()
   end
 
   defp post_request(url, raw_data, quotify) do
     data = if quotify, do: EOSRPC.quotify(raw_data), else: raw_data
-    post!(url, data)
-      |> EOSRPC.validate_request
+
+    url
+    |> post!(data)
+    |> EOSRPC.validate_request()
   end
 
   defp post_request(url, raw_data) do
@@ -67,19 +70,26 @@ defmodule EOSRPC.Wallet do
     post_request("/set_timeout", timeout)
   end
 
-  def sign_transaction(ref_block_num, ref_block_prefix,
-      expiration, scope, read_scope, messages,
-      signatures, keys, unknown) do
-
-#    TODO: whats this unknown parameter?
+  def sign_transaction(
+        ref_block_num,
+        ref_block_prefix,
+        expiration,
+        scope,
+        read_scope,
+        messages,
+        signatures,
+        keys,
+        unknown
+      ) do
+    #    TODO: whats this unknown parameter?
 
     time =
       if !!expiration do
         expiration
       else
-        Timex.now
-          |> Timex.shift(minutes: 1)
-          |> Timex.format!("%FT%T", :strftime)
+        Timex.now()
+        |> Timex.shift(minutes: 1)
+        |> Timex.format!("%FT%T", :strftime)
       end
 
     data = [
@@ -88,15 +98,14 @@ defmodule EOSRPC.Wallet do
         ref_block_prefix: ref_block_prefix,
         expiration: time,
         scope: scope,
-        read_scope: (if !!read_scope, do: read_scope, else: []),
+        read_scope: if(!!read_scope, do: read_scope, else: []),
         messages: messages,
-        signatures: (if !!signatures, do: signatures, else: [])
+        signatures: if(!!signatures, do: signatures, else: [])
       },
       keys,
-      (if !!unknown, do: unknown, else: "")
+      if(!!unknown, do: unknown, else: "")
     ]
 
     post_request("/sign_transaction", data)
   end
-
 end

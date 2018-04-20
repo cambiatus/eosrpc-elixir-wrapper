@@ -12,14 +12,17 @@ defmodule EOSRPC.Chain do
   defp base_url(), do: Application.get_env(:eosrpc, :chain)
 
   defp get_request(url) do
-    get!(url)
-      |> EOSRPC.validate_request
+    url
+    |> get!()
+    |> EOSRPC.validate_request()
   end
 
   defp post_request(url, raw_data, quotify) do
     data = if quotify, do: EOSRPC.quotify(raw_data), else: raw_data
-    post!(url, data)
-      |> EOSRPC.validate_request
+
+    url
+    |> post!(data)
+    |> EOSRPC.validate_request()
   end
 
   defp post_request(url, raw_data) do
@@ -43,7 +46,6 @@ defmodule EOSRPC.Chain do
   end
 
   def get_table_rows(scope, code, table, json) do
-
     data = %{
       scope: scope,
       code: code,
@@ -73,5 +75,4 @@ defmodule EOSRPC.Chain do
   def abi_bin_to_json(code, action, binargs) do
     post_request("/abi_bin_to_json", %{code: code, action: action, binargs: binargs})
   end
-
 end

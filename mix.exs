@@ -23,7 +23,10 @@ defmodule EOSRPC.Mixfile do
     [
       {:tesla, "1.0.0-beta.1"},
       {:jason, ">= 1.0.0"},
-      {:timex, "~> 3.1"}
+      {:timex, "~> 3.1"},
+
+      # dev
+      {:credo, "~> 0.9", only: [:dev, :test], runtime: false}
     ]
   end
 end

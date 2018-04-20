@@ -7,7 +7,7 @@ defmodule EOSRPC do
 
   def validate_request(response) do
     case response.status do
-      s when s in [200,201,203,204] -> {:ok, response.body}
+      s when s in [200, 201, 203, 204] -> {:ok, response.body}
       _ -> {:error, response}
     end
   end
@@ -19,5 +19,4 @@ defmodule EOSRPC do
       raw_data
     end
   end
-
 end
