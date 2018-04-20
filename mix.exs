@@ -8,7 +8,7 @@ defmodule EOSRPC.Mixfile do
       elixir: "~> 1.5",
       start_permanent: Mix.env == :prod,
       description: "Simple EOSRPC Wrapper for Elixir",
-      package: package()
+      package: package(),
       deps: deps()
     ]
   end
