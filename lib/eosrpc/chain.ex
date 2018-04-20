@@ -4,31 +4,15 @@ defmodule EOSRPC.Chain do
 
   Based on: https://eosio.github.io/eos/group__eosiorpc.html#chainrpc
   """
+
+  import EOSRPC
+
   use Tesla
 
   plug(Tesla.Middleware.BaseUrl, base_url())
   plug(Tesla.Middleware.JSON)
 
-  defp base_url(), do: Application.get_env(:eosrpc, :chain)
-
-  defp get_request(url) do
-    get!(url)
-      |> EOSRPC.validate_request
-  end
-
-  defp post_request(url, raw_data, quotify) do
-    data = if quotify, do: EOSRPC.quotify(raw_data), else: raw_data
-    post!(url, data)
-      |> EOSRPC.validate_request
-  end
-
-  defp post_request(url, raw_data) do
-    post_request(url, raw_data, false)
-  end
-
-  def get_info() do
-    get_request("/get_info")
-  end
+  def get_info, do: get_request("/get_info")
 
   def get_block(block_num_or_id) do
     post_request("/get_block", %{block_num_or_id: block_num_or_id})
@@ -43,7 +27,6 @@ defmodule EOSRPC.Chain do
   end
 
   def get_table_rows(scope, code, table, json) do
-
     data = %{
       scope: scope,
       code: code,
@@ -74,4 +57,5 @@ defmodule EOSRPC.Chain do
     post_request("/abi_bin_to_json", %{code: code, action: action, binargs: binargs})
   end
 
+  def base_url(), do: :eosrpc |> Application.get_env(__MODULE__) |> Keyword.get(:url)
 end
