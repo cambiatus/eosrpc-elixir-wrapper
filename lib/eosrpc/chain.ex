@@ -9,7 +9,7 @@ defmodule EOSRPC.Chain do
 
   use Tesla
 
-  plug(Tesla.Middleware.BaseUrl, "#{EOSRPC.base_url()}/chain")
+  plug(Tesla.Middleware.BaseUrl, base_url())
   plug(Tesla.Middleware.JSON)
 
   def get_info, do: get_request("/get_info")
@@ -56,4 +56,6 @@ defmodule EOSRPC.Chain do
   def abi_bin_to_json(code, action, binargs) do
     post_request("/abi_bin_to_json", %{code: code, action: action, binargs: binargs})
   end
+
+  def base_url(), do: :eosrpc |> Application.get_env(__MODULE__) |> Keyword.get(:url)
 end

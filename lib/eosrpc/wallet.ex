@@ -9,7 +9,7 @@ defmodule EOSRPC.Wallet do
 
   use Tesla
 
-  plug(Tesla.Middleware.BaseUrl, "#{EOSRPC.base_url()}/wallet")
+  plug(Tesla.Middleware.BaseUrl, base_url())
   plug(Tesla.Middleware.JSON)
 
   def list, do: get_request("/list_wallets")
@@ -71,4 +71,6 @@ defmodule EOSRPC.Wallet do
     |> Timex.shift(minutes: 1)
     |> Timex.format!("%FT%T", :strftime)
   end
+
+  def base_url(), do: :eosrpc |> Application.get_env(__MODULE__) |> Keyword.get(:url)
 end
