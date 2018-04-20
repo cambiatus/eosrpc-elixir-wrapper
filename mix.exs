@@ -7,6 +7,8 @@ defmodule EOSRPC.Mixfile do
       version: "0.1.0",
       elixir: "~> 1.5",
       start_permanent: Mix.env == :prod,
+      description: "Simple EOSRPC Wrapper for Elixir",
+      package: package()
       deps: deps()
     ]
   end
@@ -27,6 +29,14 @@ defmodule EOSRPC.Mixfile do
 
       # dev
       {:credo, "~> 0.9", only: [:dev, :test], runtime: false}
+    ]
+  end
+
+  defp package() do
+    [
+      name: "eosrpc",
+      files: ["lib", "test", "mix.exs", "README.md", "LICENSE*"],
+      maintainers: ["Leo Ribeiro", "Julien Lucca"]
     ]
   end
 end
