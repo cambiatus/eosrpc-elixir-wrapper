@@ -1,5 +1,8 @@
 # EOSRPC
 
+[![Hex.pm](https://img.shields.io/hexpm/v/eosrpc.svg)](https://hex.pm/packages/eosrpc)
+
+
 Simple EOSRPC Wrapper for Elixir. 
 Based on [EOS RPC Official Docs](https://eosio.github.io/eos/group__eosiorpc.html)
 
