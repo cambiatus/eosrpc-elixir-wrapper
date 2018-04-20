@@ -26,4 +26,7 @@ config :eosrpc, EOSRPC.Chain,
   url: "http://127.0.0.1:8888/v1/chain"
 ```
 
+## License
+
+This project is licensed under the GNU GPLv3 License - see the [LICENSE](LICENSE) file for details
 

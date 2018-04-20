@@ -4,7 +4,7 @@ defmodule EOSRPC.Mixfile do
   def project do
     [
       app: :eosrpc,
-      version: "0.1.0",
+      version: "0.1.0-beta",
       elixir: "~> 1.5",
       start_permanent: Mix.env == :prod,
       description: "Simple EOSRPC Wrapper for Elixir",
@@ -36,6 +36,8 @@ defmodule EOSRPC.Mixfile do
     [
       name: "eosrpc",
       files: ["lib", "test", "mix.exs", "README.md", "LICENSE*"],
+      licenses: ["GNU GPLv3"],
+      links: ["https://github.com/BeSpiral/eosrpc-elixir-wrapper"],
       maintainers: ["Leo Ribeiro", "Julien Lucca"]
     ]
   end
