@@ -23,6 +23,10 @@ defmodule EOSRPC.Wallet do
       |> EOSRPC.validate_request
   end
 
+  defp post_request(url, raw_data) do
+    post_request(url, raw_data, false)
+  end
+
   def list() do
     get_request("/list_wallets")
   end
@@ -52,15 +56,15 @@ defmodule EOSRPC.Wallet do
   end
 
   def unlock(name, password) do
-    post_request("/unlock", [name, password], false)
+    post_request("/unlock", [name, password])
   end
 
   def import_key(name, key) do
-    post_request("/import_key", [name, key], false)
+    post_request("/import_key", [name, key])
   end
 
   def set_timeout(timeout) do
-    post_request("/set_timeout", timeout, false)
+    post_request("/set_timeout", timeout)
   end
 
   def sign_transaction(ref_block_num, ref_block_prefix,
@@ -92,7 +96,7 @@ defmodule EOSRPC.Wallet do
       (if !!unknown, do: unknown, else: "")
     ]
 
-    post_request("/sign_transaction", data, false)
+    post_request("/sign_transaction", data)
   end
 
 end
