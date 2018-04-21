@@ -6,10 +6,15 @@ defmodule EOSRPC.Mixfile do
       app: :eosrpc,
       version: "0.1.0-beta",
       elixir: "~> 1.5",
-      start_permanent: Mix.env == :prod,
+      start_permanent: Mix.env() == :prod,
       description: "Simple EOSRPC Wrapper for Elixir",
       package: package(),
-      deps: deps()
+      deps: deps(),
+      source_url: "https://github.com/BeSpiral/eosrpc-elixir-wrapper",
+      docs: [
+        main: "readme",
+        extras: ["README.md"]
+      ]
     ]
   end
 
