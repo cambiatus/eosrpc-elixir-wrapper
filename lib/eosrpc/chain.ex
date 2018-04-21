@@ -79,6 +79,7 @@ defmodule EOSRPC.Chain do
 
   `signed_transaction` should be a map like this JSON:
 
+  ```
   {
     "signatures": [
       "EOSKZ4pTehVfqs92wujRp34qRAvUjKJrUyufZfJDo9fdBLzhieyfUSUJpKz1Z12rxh1gTQZ4BcWvKourzxCLb2fMsvN898KSn"
@@ -109,6 +110,7 @@ defmodule EOSRPC.Chain do
       ]
     }
   }
+  ```
   """
   def push_transaction(signed_transaction) do
     "/push_transaction" |> url() |> post_request(signed_transaction)
