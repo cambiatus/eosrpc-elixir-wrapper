@@ -1,5 +1,6 @@
 # EOSRPC
 
+[![Build Status](https://travis-ci.org/BeSpiral/eosrpc-elixir-wrapper.svg?branch=master)](https://travis-ci.org/BeSpiral/eosrpc-elixir-wrapper)
 [![Hex.pm](https://img.shields.io/hexpm/v/eosrpc.svg)](https://hex.pm/packages/eosrpc)
 
 
