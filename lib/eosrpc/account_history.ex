@@ -34,5 +34,9 @@ defmodule EOSRPC.AccountHistory do
   end
 
   def url(url),
-    do: :eosrpc |> Application.get_env(__MODULE__) |> Keyword.get(:url) |> Kernel.<>(url)
+    do:
+      :eosrpc
+      |> Application.get_env(__MODULE__)
+      |> Keyword.get(:url)
+      |> Kernel.<>(url)
 end
