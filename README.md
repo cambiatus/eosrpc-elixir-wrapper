@@ -17,7 +17,7 @@ def deps do
 end
 ```
 
-You need to setup the Chain and Wallet URLs. This is the default configuration:
+You need to setup the Chain, Wallet and Account History URLs. This is the default configuration:
 
 ```elixir
 config :eosrpc, EOSRPC.Wallet,
@@ -25,6 +25,9 @@ config :eosrpc, EOSRPC.Wallet,
 
 config :eosrpc, EOSRPC.Chain,
   url: "http://127.0.0.1:8888/v1/chain"
+
+config :eosrpc, EOSRPC.AccountHistory,
+  url: "http://127.0.0.1:8888/v1/account_history"
 ```
 
 ## Examples
