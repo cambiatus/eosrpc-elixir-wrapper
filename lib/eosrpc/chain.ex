@@ -36,10 +36,10 @@ defmodule EOSRPC.Chain do
   @doc """
   Fetch smart contract data from an account.
   """
-  def get_table_rows(scope, code, table, json) do
+  def get_table_rows(contract, scope, table, json) do
     data = %{
       scope: scope,
-      code: code,
+      code: contract,
       table: table,
       json: json
     }
