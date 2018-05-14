@@ -12,12 +12,13 @@ Based on [EOS RPC Official Docs](https://eosio.github.io/eos/group__eosiorpc.htm
 ```elixir
 def deps do
   [
-    {:eosrpc, "~> 0.1.3-beta"}
+    {:eosrpc, "~> 0.2.0-beta"}
   ]
 end
 ```
 
 You need to setup the Chain, Wallet and Account History URLs. This is the default configuration:
+
 
 ```elixir
 config :eosrpc, EOSRPC.Wallet,
@@ -26,9 +27,10 @@ config :eosrpc, EOSRPC.Wallet,
 config :eosrpc, EOSRPC.Chain,
   url: "http://127.0.0.1:8888/v1/chain"
 
-config :eosrpc, EOSRPC.AccountHistory,
-  url: "http://127.0.0.1:8888/v1/account_history"
+config :eosrpc, EOSRPC.History,
+  url: "http://127.0.0.1:8888/v1/history"
 ```
+
 
 ## Examples
 
@@ -53,7 +55,7 @@ Creating a new account `leo` under the owner `eosio`
 EOSRPC.Helper.new_account("eosio", "leo", "EOS_OWNER_PUB_KEY", "EOS_ACTIVE_PUB_KEY")
 ```
 
-All of the EOSRPC APIs are in `EOSRPC.Wallet` and `EOSRPC.Chain`
+All of the EOSRPC APIs are in `EOSRPC.Wallet`, `EOSRPC.Chain` and `EOSRPC.History`
 
 For complete transactions signature and submission flow examples check `EOSRPC.Helper`
 
