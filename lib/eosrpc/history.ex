@@ -3,6 +3,10 @@ defmodule EOSRPC.History do
   EOS History Apis Wrapper for Elixir
   """
 
+  @callback get_transaction(id :: any) :: any
+  @callback get_actions(account_name :: binary, post :: integer, offset :: integer) :: any
+  @callback url(url :: binary) :: binary
+
   import EOSRPC
 
   @doc """
