@@ -87,23 +87,22 @@ defmodule EOSRPC.Chain do
       "EOSKZ4pTehVfqs92wujRp34qRAvUjKJrUyufZfJDo9fdBLzhieyfUSUJpKz1Z12rxh1gTQZ4BcWvKourzxCLb2fMsvN898KSn"
     ],
     "compression": "none",
-    "context_free_data": [],
     "transaction": {
-      "region": 0,
-      "ref_block_num": "32697",
-      "ref_block_prefix": "32649",
-      "expiration": "2018-09-25T06:28:49",
-      "max_net_usage_words": 0,
-      "max_kcpu_usage": 0,
-      "delay_sec": 0,
       "context_free_actions": [],
+      "delay_sec": 0,
+      "expiration": "2018-09-25T06:28:49",
+      "max_cpu_usage_ms": 0,
+      "net_usage_words": 0,
+      "ref_block_num": 32697,
+      "ref_block_prefix": 32649123,
+      "transaction_extensions": []
       "actions": [
         {
-          "account": "eoseco",
+          "account": "eosio",
           "name": "transfer",
           "authorization": [
             {
-              "actor": "eoseco",
+              "actor": "eosio",
               "permission": "active"
             }
           ],

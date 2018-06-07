@@ -21,3 +21,5 @@ erl_crash.dump
 
 .idea
 eosrpc.iml
+
+.elixir_ls

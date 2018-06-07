@@ -55,12 +55,12 @@ defmodule EOSRPC.Helper do
   @doc """
   Identify the required keys for the transaction and sign with them
   """
-  def sign_transaction(trx_data) do
+  def sign_transaction(trx_data, chain_id) do
     {:ok, public_keys} = Wallet.get_public_keys()
 
     {:ok, keys} = Chain.get_required_keys(trx_data, public_keys)
 
-    Wallet.sign_transaction(trx_data, keys["required_keys"])
+    Wallet.sign_transaction(trx_data, keys["required_keys"], chain_id)
   end
 
   @doc """
@@ -68,9 +68,8 @@ defmodule EOSRPC.Helper do
   """
   def push_transaction(trx_data, signatures) do
     final_trx_data = %{
-      signatures: signatures,
       compression: "none",
-      context_free_data: [],
+      signatures: signatures,
       transaction: trx_data
     }
 
@@ -97,64 +96,54 @@ defmodule EOSRPC.Helper do
     owner = %{
       threshold: 1,
       keys: [%{key: owner_key, weight: 1}],
-      accounts: []
+      accounts: [],
+      waits: []
     }
 
     active = %{
       threshold: 1,
       keys: [%{key: active_key, weight: 1}],
-      accounts: []
+      accounts: [],
+      waits: []
     }
 
-    recovery = %{
-      threshold: 1,
-      keys: [],
-      accounts: [
-        %{
-          permission: %{
-            actor: creator,
-            permission: "active"
-          },
-          weight: 1
+    actions = [
+      %{
+        account: "eosio",
+        name: "newaccount",
+        authorization: [authorization],
+        data: %{
+          creator: creator,
+          name: new_account,
+          active: active,
+          owner: owner
         }
-      ]
-    }
-
-    action = %{
-      account: "eosio",
-      name: "newaccount",
-      authorization: [authorization],
-      data: %{
-        creator: creator,
-        name: new_account,
-        active: active,
-        owner: owner,
-        recovery: recovery
       }
-    }
+    ]
 
-    auto_push([action])
+    auto_push(actions)
   end
 
   @doc """
   Sign and submit transaction if you have binary data, otherwise utilizes `auto_push/1`
   """
   def auto_push_bin(actions) do
-    {:ok, block} = current_irreversible_block()
+    {:ok, chain} = Chain.get_info()
+    {:ok, block} = Chain.get_block(chain["last_irreversible_block_num"])
 
     trx_data = %{
+      actions: actions,
+      context_free_actions: [],
+      delay_sec: 0,
+      expiration: one_minute_from_now(),
+      max_cpu_usage_ms: 0,
+      net_usage_words: 0,
       ref_block_num: block["block_num"],
       ref_block_prefix: block["ref_block_prefix"],
-      expiration: one_minute_from_now(),
-      region: 0,
-      max_net_usage_words: 0,
-      max_kcpu_usage: 0,
-      delay_sec: 0,
-      context_free_actions: [],
-      actions: actions
+      transaction_extensions: []
     }
 
-    case sign_transaction(trx_data) do
+    case sign_transaction(trx_data, chain["chain_id"]) do
       {:ok, sign_body} -> push_transaction(trx_data, sign_body["signatures"])
       error -> error
     end

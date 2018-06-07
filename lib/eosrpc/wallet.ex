@@ -68,29 +68,28 @@ defmodule EOSRPC.Wallet do
   @doc """
   Sign transaction given an array of transaction, require public keys, and chain id
 
-  `transaction` structure should be a map like this json:
+  `transaction` structure like this json:
 
   ```
   {
     "signatures": [],
     "compression": "none",
-    "context_free_data": [],
     "transaction": {
-      "region": 0,
-      "ref_block_num": "32697",
-      "ref_block_prefix": "32649",
-      "expiration": "2018-09-25T06:28:49",
-      "max_net_usage_words": 0,
-      "max_kcpu_usage": 0,
-      "delay_sec": 0,
       "context_free_actions": [],
+      "delay_sec": 0,
+      "expiration": "2018-09-25T06:28:49",
+      "max_cpu_usage_ms": 0,
+      "net_usage_words": 0,
+      "ref_block_num": 32697,
+      "ref_block_prefix": 32649123,
+      "transaction_extensions": []
       "actions": [
         {
-          "account": "eoseco",
+          "account": "eosio",
           "name": "transfer",
           "authorization": [
             {
-              "actor": "eoseco",
+              "actor": "eosio",
               "permission": "active"
             }
           ],
@@ -101,7 +100,8 @@ defmodule EOSRPC.Wallet do
   }
   ```
 
-  `keys` should be a list of public keys
+  `keys` a list of public keys
+  `chain_id` the chain id, a field from chain_info
 
   """
   def sign_transaction(transaction, keys), do: sign_transaction(transaction, keys, "")
