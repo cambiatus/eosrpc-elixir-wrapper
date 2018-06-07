@@ -12,7 +12,7 @@ Based on [EOS RPC Official Docs](https://developers.eos.io/eosio-nodeos/referenc
 ```elixir
 def deps do
   [
-    {:eosrpc, "~> 0.3.0-beta"}
+    {:eosrpc, "~> 0.3.0"}
   ]
 end
 ```
