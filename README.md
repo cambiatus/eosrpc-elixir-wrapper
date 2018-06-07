@@ -5,7 +5,7 @@
 
 
 Simple EOSRPC Wrapper for Elixir.
-Based on [EOS RPC Official Docs](https://eosio.github.io/eos/group__eosiorpc.html)
+Based on [EOS RPC Official Docs](https://developers.eos.io/eosio-nodeos/reference)
 
 ## Installation
 
