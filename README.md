@@ -4,7 +4,7 @@
 [![Hex.pm](https://img.shields.io/hexpm/v/eosrpc.svg)](https://hex.pm/packages/eosrpc)
 
 
-Simple EOSRPC Wrapper for Elixir. 
+Simple EOSRPC Wrapper for Elixir.
 Based on [EOS RPC Official Docs](https://eosio.github.io/eos/group__eosiorpc.html)
 
 ## Installation
@@ -12,7 +12,7 @@ Based on [EOS RPC Official Docs](https://eosio.github.io/eos/group__eosiorpc.htm
 ```elixir
 def deps do
   [
-    {:eosrpc, "~> 0.2.0-beta"}
+    {:eosrpc, "~> 0.3.0-beta"}
   ]
 end
 ```
@@ -34,7 +34,7 @@ config :eosrpc, EOSRPC.History,
 
 ## Examples
 
-Autosigning and pushing a transaction. 
+Autosigning and pushing a transaction.
 
 ```elixir
 actions = [
@@ -46,7 +46,7 @@ actions = [
   }
 ]
 
-EOSRPC.Helper.auto_push(actions) 
+EOSRPC.Helper.auto_push(actions)
 ```
 
 Creating a new account `leo` under the owner `eosio`
