@@ -4,7 +4,7 @@ defmodule EOSRPC.Mixfile do
   def project do
     [
       app: :eosrpc,
-      version: "0.3.0-beta",
+      version: "0.3.0",
       elixir: "~> 1.5",
       start_permanent: Mix.env() == :prod,
       description: "Simple EOSRPC Wrapper for Elixir",
@@ -28,7 +28,7 @@ defmodule EOSRPC.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:tesla, "1.0.0-beta.1"},
+      {:tesla, "1.0.0"},
       {:jason, ">= 1.0.0"},
       {:timex, "~> 3.1"},
       {:ex_doc, ">= 0.0.0", only: :dev},
