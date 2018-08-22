@@ -28,13 +28,13 @@ defmodule EOSRPC.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:tesla, "1.0.0"},
-      {:jason, ">= 1.0.0"},
-      {:timex, "~> 3.1"},
+      {:tesla, "1.1.0"},
+      {:jason, ">= 1.1.1"},
+      {:timex, "~> 3.3"},
       {:ex_doc, ">= 0.0.0", only: :dev},
 
       # dev
-      {:credo, "~> 0.9", only: [:dev, :test], runtime: false}
+      {:credo, "~> 0.10", only: [:dev, :test], runtime: false}
     ]
   end
 
