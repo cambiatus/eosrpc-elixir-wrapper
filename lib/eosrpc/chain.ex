@@ -2,11 +2,14 @@ defmodule EOSRPC.Chain do
   @moduledoc """
   EOSRPC Wallet Wrapper for Elixir
 
-  Based on: https://eosio.github.io/eos/group__eosiorpc.html#chainrpc
+  Based on: https://developers.eos.io/eosio-nodeos/v1.2.0/reference
   """
+
+  use Tesla
 
   import EOSRPC
 
+  plug(Tesla.Middleware.JSON)
   @doc """
   Get latest information related to a node
   """
