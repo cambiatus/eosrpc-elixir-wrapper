@@ -1,6 +1,8 @@
 defmodule EOSRPC.AccountHistory do
   @moduledoc """
   EOS Account History Apis Wrapper for Elixir
+
+  Based on: https://developers.eos.io/eosio-nodeos/reference on History section
   """
 
   use Tesla
@@ -9,6 +11,18 @@ defmodule EOSRPC.AccountHistory do
 
   plug(Tesla.Middleware.JSON)
   plug(EOSRPC.Middleware.Error)
+
+
+  @doc """
+  Gets all actions for a given account
+  """
+  def get_actions(account_name) do
+    "get_actions" |> url() |> post(%{account_name: account_name})
+  end
+
+  def get_actions!(account_name) do
+    unwrap_or_raise(get_actions(account_name))
+  end
 
   @doc """
   Get transaction data

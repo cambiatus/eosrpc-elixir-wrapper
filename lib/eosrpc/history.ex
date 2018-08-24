@@ -7,6 +7,8 @@ defmodule EOSRPC.History do
   @callback get_actions(account_name :: binary, post :: integer, offset :: integer) :: any
   @callback url(url :: binary) :: binary
 
+  use Tesla
+
   import EOSRPC
 
   @doc """

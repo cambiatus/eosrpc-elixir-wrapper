@@ -2,7 +2,7 @@ defmodule EOSRPC.Chain do
   @moduledoc """
   EOSRPC Wallet Wrapper for Elixir
 
-  Based on: https://developers.eos.io/eosio-nodeos/v1.2.0/reference
+  Based on: https://developers.eos.io/eosio-nodeos/v1.2.0/reference on Chain section
   """
 
   use Tesla
