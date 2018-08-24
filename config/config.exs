@@ -36,7 +36,7 @@ config :eosrpc, EOSRPC.Chain,
   url: "http://127.0.0.1:8888/v1/chain"
 
 config :eosrpc, EOSRPC.AccountHistory,
-       url: "http://127.0.0.1:8888/v1/account_history"
+  url: "http://127.0.0.1:8888/v1/account_history"
 
 config :eosrpc, EOSRPC.History,
-       url: "http://127.0.0.1:8888/v1/history"
+  url: "http://127.0.0.1:8888/v1/history"
