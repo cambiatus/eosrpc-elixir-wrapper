@@ -11,11 +11,18 @@ defmodule EOSRPC.History do
 
   import EOSRPC
 
+  plug(Tesla.Middleware.JSON)
+  plug(EOSRPC.Middleware.Error)
+
   @doc """
   Retrieve a transaction from the blockchain.
   """
-  def get_transaction(id) do
-    "/get_transaction" |> url() |> post_request(%{id: id})
+  def get_transaction(transaction_id) do
+    "/get_transaction" |> url() |> post_request(%{id: transaction_id})
+  end
+
+  def get_transaction!(transaction_id) do
+    unwrap_or_raise(get_transaction(transaction_id))
   end
 
   @doc """
@@ -27,10 +34,38 @@ defmodule EOSRPC.History do
     |> post_request(%{account_name: account_name, pos: pos, offset: offset})
   end
 
-  def url(url),
-    do:
+  def get_actions!(account_name, pos \\ 0, offset \\ 100) do
+    unwrap_or_raise(get_actions(account, pos, offset))
+  end
+
+  @doc """
+  Retrieve accounts associated with a public key
+  """
+  def get_key_accounts(public_key) do
+    "/get_key_accounts" |> url() |> post(%{public_key: public_key})
+  end
+
+  def get_key_accounts!(public_key) do
+    unwrap_or_raise(get_key_accounts(public_key))
+  end
+
+  @doc """
+  Retrieve accounts which are created by the given account
+  """
+  def get_controlled_accounts(account_name) do
+    "/get_controlled_accounts"
+    |> url()
+    |> post(%{controlling_account: account_name})
+  end
+
+  def get_controlled_accounts!(account_name) do
+    unwrap_or_raise(get_controlled_accounts(account_name))
+  end
+
+  def url(url) do
       :eosrpc
       |> Application.get_env(__MODULE__)
       |> Keyword.get(:url)
       |> Kernel.<>(url)
+  end
 end
