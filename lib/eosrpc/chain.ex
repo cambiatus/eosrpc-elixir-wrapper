@@ -10,27 +10,27 @@ defmodule EOSRPC.Chain do
   @doc """
   Get latest information related to a node
   """
-  def get_info, do: url("/get_info") |> get_request()
+  def get_info, do: url("/get_info") |> get()
 
   @doc """
   Get information related to a block.
   """
   def get_block(block_num_or_id) do
-    "/get_block" |> url() |> post_request(%{block_num_or_id: block_num_or_id})
+    "/get_block" |> url() |> post(%{block_num_or_id: block_num_or_id})
   end
 
   @doc """
   Get information related to an account.
   """
   def get_account(account_name) do
-    "/get_account" |> url() |> post_request(%{account_name: account_name})
+    "/get_account" |> url() |> post(%{account_name: account_name})
   end
 
   @doc """
   Fetch smart contract code.
   """
   def get_code(account_name) do
-    "/get_code" |> url() |> post_request(%{account_name: account_name})
+    "/get_code" |> url() |> post(%{account_name: account_name})
   end
 
   @doc """
@@ -46,7 +46,7 @@ defmodule EOSRPC.Chain do
       limit: 1_000,
     }
 
-    "/get_table_rows" |> url() |> post_request(data)
+    "/get_table_rows" |> url() |> post(data)
   end
 
   @doc """
@@ -58,7 +58,7 @@ defmodule EOSRPC.Chain do
       available_keys: available_keys
     }
 
-    "/get_required_keys" |> url() |> post_request(data)
+    "/get_required_keys" |> url() |> post(data)
   end
 
   @doc """
@@ -66,14 +66,14 @@ defmodule EOSRPC.Chain do
   for the data field in push_transaction.
   """
   def abi_json_to_bin(code, action, args) do
-    "/abi_json_to_bin" |> url() |> post_request(%{code: code, action: action, args: args})
+    "/abi_json_to_bin" |> url() |> post(%{code: code, action: action, args: args})
   end
 
   @doc """
   Serialize back binary hex to json.
   """
   def abi_bin_to_json(code, action, binargs) do
-    "/abi_bin_to_json" |> url() |> post_request(%{code: code, action: action, binargs: binargs})
+    "/abi_bin_to_json" |> url() |> post(%{code: code, action: action, binargs: binargs})
   end
 
   @doc """
@@ -114,11 +114,11 @@ defmodule EOSRPC.Chain do
   ```
   """
   def push_transaction(signed_transaction) do
-    "/push_transaction" |> url() |> post_request(signed_transaction)
+    "/push_transaction" |> url() |> post(signed_transaction)
   end
 
   def push_transactions(signed_transactions) do
-    "/push_transactions" |> url() |> post_request(signed_transactions)
+    "/push_transactions" |> url() |> post(signed_transactions)
   end
 
   def url(url),
