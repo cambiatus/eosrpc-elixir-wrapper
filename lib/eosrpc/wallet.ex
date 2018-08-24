@@ -2,45 +2,58 @@ defmodule EOSRPC.Wallet do
   @moduledoc """
   EOSRPC Wallet Wrapper for Elixir
 
-  Based on: https://eosio.github.io/eos/group__eosiorpc.html#walletrpc
+  Based on source code, since there is no documentation for this
+  https://github.com/EOSIO/eos/blob/master/plugins/wallet_api_plugin/wallet_api_plugin.cpp
   """
 
+  use Tesla
+
   import EOSRPC
+
+  plug(Tesla.Middleware.JSON)
+  plug(EOSRPC.Middleware.Error)
 
   @doc """
   List all wallets
   """
-  def list, do: "/list_wallets" |> url() |> get_request()
+  def list, do: "/list_wallets" |> url() |> get()
+  def list!, do: unwrap_or_raise(list())
 
   @doc """
   Lock all wallets
   """
-  def lock_all, do: "/lock_all" |> url() |> get_request()
+  def lock_all, do: "/lock_all" |> url() |> get()
+  def lock_all!, do: unwrap_or_raise(lock_all())
 
   @doc """
   List all public keys across all wallets
   """
-  def get_public_keys, do: "/get_public_keys" |> url() |> get_request()
+  def get_public_keys, do: "/get_public_keys" |> url() |> get()
+  def get_public_keys!, do: unwrap_or_raise(get_public_keys())
 
   @doc """
   List all key pairs across all wallets
   """
-  def list_keys, do: "/list_keys" |> url() |> get_request()
+  def list_keys, do: "/list_keys" |> url() |> get()
+  def list_keys!, do: unwrap_or_raise(list_keys())
 
   @doc """
   Create a new wallet with the given name
   """
-  def create(name), do: "/create" |> url() |> post_request(name, true)
+  def create(name), do: "/create" |> url() |> post(name, true)
+  def create!(name), do: unwrap_or_raise(create(name))
 
   @doc """
   Open an existing wallet of the given name
   """
-  def open(name), do: "/open" |> url() |> post_request(name, true)
+  def open(name), do: "/open" |> url() |> post(name, true)
+  def open!(name), do: unwrap_or_raise(open(name))
 
   @doc """
   Lock a wallet of the given name
   """
-  def lock(name), do: "/lock" |> url() |> post_request(name, true)
+  def lock(name), do: "/lock" |> url() |> post(name, true)
+  def lock!(name), do: unwrap_or_raise(lock(name))
 
   @doc """
   Unlock a wallet with the given name and password
@@ -48,8 +61,9 @@ defmodule EOSRPC.Wallet do
   def unlock(name, password) do
     "/unlock"
     |> url()
-    |> post_request([name, password])
+    |> post([name, password])
   end
+  def unlock!(name, password), do: unwrap_or_raise(unlock(name, password))
 
   @doc """
   Import a private key to the wallet of the given name
@@ -57,13 +71,15 @@ defmodule EOSRPC.Wallet do
   def import_key(name, key) do
     "/import_key"
     |> url()
-    |> post_request([name, key])
+    |> post([name, key])
   end
+  def import_key!(name, key), do: unwrap_or_raise(import_key(name, key))
 
   @doc """
   Set wallet auto lock timeout (in seconds)
   """
-  def set_timeout(timeout_secs), do: "/set_timeout" |> url() |> post_request(timeout_secs)
+  def set_timeout(seconds), do: "/set_timeout" |> url() |> post(seconds)
+  def set_timeout!(seconds), do: unwrap_or_raise(set_timeout(seconds))
 
   @doc """
   Sign transaction given an array of transaction, require public keys, and chain id
@@ -105,11 +121,15 @@ defmodule EOSRPC.Wallet do
 
   """
   def sign_transaction(transaction, keys), do: sign_transaction(transaction, keys, "")
+  def sign_transaction!(transaction, keys), do: unwrap_or_raise(sign_transaction(transaction, keys))
 
   def sign_transaction(transaction, keys, chain_id) do
     "/sign_transaction"
     |> url()
-    |> post_request([transaction, keys, chain_id])
+    |> post([transaction, keys, chain_id])
+  end
+  def sign_transaction!(transaction, keys, chain_id) do
+    unwrap_or_raise(sign_transaction(transaction, key, chain_id))
   end
 
   def url(url),
