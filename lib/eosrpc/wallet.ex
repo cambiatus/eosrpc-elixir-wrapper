@@ -129,7 +129,7 @@ defmodule EOSRPC.Wallet do
     |> post([transaction, keys, chain_id])
   end
   def sign_transaction!(transaction, keys, chain_id) do
-    unwrap_or_raise(sign_transaction(transaction, key, chain_id))
+    unwrap_or_raise(sign_transaction(transaction, keys, chain_id))
   end
 
   def url(url),

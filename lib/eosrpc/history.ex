@@ -18,7 +18,7 @@ defmodule EOSRPC.History do
   Retrieve a transaction from the blockchain.
   """
   def get_transaction(transaction_id) do
-    "/get_transaction" |> url() |> post_request(%{id: transaction_id})
+    "/get_transaction" |> url() |> post(%{id: transaction_id})
   end
 
   def get_transaction!(transaction_id) do
@@ -31,11 +31,11 @@ defmodule EOSRPC.History do
   def get_actions(account_name, pos \\ 0, offset \\ 100) do
     "/get_actions"
     |> url()
-    |> post_request(%{account_name: account_name, pos: pos, offset: offset})
+    |> post(%{account_name: account_name, pos: pos, offset: offset})
   end
 
   def get_actions!(account_name, pos \\ 0, offset \\ 100) do
-    unwrap_or_raise(get_actions(account, pos, offset))
+    unwrap_or_raise(get_actions(account_name, pos, offset))
   end
 
   @doc """
