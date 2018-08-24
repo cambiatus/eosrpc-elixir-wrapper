@@ -31,7 +31,7 @@ defmodule EOSRPC.Mixfile do
       {:tesla, "1.1.0"},
       {:jason, ">= 1.1.1"},
       {:timex, "~> 3.3"},
-      {:ex_doc, ">= 0.0.0", only: :dev},
+      {:ex_doc, "~> 0.19", only: :dev, runtime: false},
 
       # dev
       {:credo, "~> 0.10", only: [:dev, :test], runtime: false}
