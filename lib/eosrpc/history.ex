@@ -28,13 +28,13 @@ defmodule EOSRPC.History do
   @doc """
   Get actions for a given account
   """
-  def get_actions(account_name, pos \\ 0, offset \\ 100) do
+  def get_actions(account_name, pos \\ 0, offset \\ 10_000) do
     "/get_actions"
     |> url()
     |> post(%{account_name: account_name, pos: pos, offset: offset})
   end
 
-  def get_actions!(account_name, pos \\ 0, offset \\ 100) do
+  def get_actions!(account_name, pos \\ 0, offset \\ 10_000) do
     unwrap_or_raise(get_actions(account_name, pos, offset))
   end
 
