@@ -32,7 +32,7 @@ defmodule EOSRPC.Helper do
         response = Chain.abi_json_to_bin(i[:account], i[:name], i[:data])
 
         case response do
-          {:ok, bin} ->
+          {:ok, %{body: bin}} ->
             %{i | data: bin["binargs"]}
 
           _ ->
@@ -56,9 +56,9 @@ defmodule EOSRPC.Helper do
   Identify the required keys for the transaction and sign with them
   """
   def sign_transaction(trx_data, chain_id) do
-    {:ok, public_keys} = Wallet.get_public_keys()
+    {:ok, %{body: public_keys}} = Wallet.get_public_keys()
 
-    {:ok, keys} = Chain.get_required_keys(trx_data, public_keys)
+    {:ok, %{body: keys}} = Chain.get_required_keys(trx_data, public_keys)
 
     Wallet.sign_transaction(trx_data, keys["required_keys"], chain_id)
   end
@@ -80,7 +80,7 @@ defmodule EOSRPC.Helper do
   Get the current irreversible block data from the chain
   """
   def current_irreversible_block do
-    {:ok, chain} = Chain.get_info()
+    {:ok, %{body: chain}} = Chain.get_info()
     Chain.get_block(chain["last_irreversible_block_num"])
   end
 
@@ -128,8 +128,8 @@ defmodule EOSRPC.Helper do
   Sign and submit transaction if you have binary data, otherwise utilizes `auto_push/1`
   """
   def auto_push_bin(actions) do
-    {:ok, chain} = Chain.get_info()
-    {:ok, block} = Chain.get_block(chain["last_irreversible_block_num"])
+    {:ok, %{body: chain}} = Chain.get_info()
+    {:ok, %{body: block}} = Chain.get_block(chain["last_irreversible_block_num"])
 
     trx_data = %{
       actions: actions,
@@ -144,7 +144,7 @@ defmodule EOSRPC.Helper do
     }
 
     case sign_transaction(trx_data, chain["chain_id"]) do
-      {:ok, sign_body} -> push_transaction(trx_data, sign_body["signatures"])
+      {:ok, %{body: sign_body}} -> push_transaction(trx_data, sign_body["signatures"])
       error -> error
     end
   end

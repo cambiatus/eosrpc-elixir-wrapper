@@ -40,19 +40,19 @@ defmodule EOSRPC.Wallet do
   @doc """
   Create a new wallet with the given name
   """
-  def create(name), do: "/create" |> url() |> post(name, true)
+  def create(name), do: "/create" |> url() |> post(name)
   def create!(name), do: unwrap_or_raise(create(name))
 
   @doc """
   Open an existing wallet of the given name
   """
-  def open(name), do: "/open" |> url() |> post(name, true)
+  def open(name), do: "/open" |> url() |> post(name)
   def open!(name), do: unwrap_or_raise(open(name))
 
   @doc """
   Lock a wallet of the given name
   """
-  def lock(name), do: "/lock" |> url() |> post(name, true)
+  def lock(name), do: "/lock" |> url() |> post(name)
   def lock!(name), do: unwrap_or_raise(lock(name))
 
   @doc """
