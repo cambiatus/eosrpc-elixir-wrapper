@@ -28,9 +28,9 @@ defmodule EOSRPC.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:tesla, "1.1.0"},
+      {:tesla, "1.2.1"},
       {:jason, ">= 1.1.1"},
-      {:timex, "~> 3.3"},
+      {:timex, "~> 3.4"},
       {:ex_doc, "~> 0.19", only: :dev, runtime: false},
 
       # dev
