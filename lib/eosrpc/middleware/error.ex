@@ -10,7 +10,7 @@ defmodule EOSRPC.Middleware.Error do
   defmodule MyClient do
     use Tesla
 
-    plug(EOSRPC.ErrorMiddleware)
+    plug(EOSRPC.Middleware.Error)
   end
   ```
   """
@@ -21,8 +21,11 @@ defmodule EOSRPC.Middleware.Error do
     |> case do
          {:ok, env} ->
            case env.status do
-             s when s in [200, 201, 202, 203, 204] -> {:ok, env}
-             _ -> {:error, env}
+             s when s in [200, 201, 202, 203, 204] ->
+               {:ok, env}
+
+             _ ->
+               {:error, env}
            end
 
          env ->
