@@ -9,8 +9,8 @@ defmodule EOSRPC.Chain do
 
   import EOSRPC
 
-  plug(Tesla.Middleware.JSON)
   plug(EOSRPC.Middleware.Error)
+  plug(Tesla.Middleware.JSON)
 
   @doc """
   Get latest information related to a node

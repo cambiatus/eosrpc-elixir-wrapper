@@ -11,8 +11,8 @@ defmodule EOSRPC.History do
 
   import EOSRPC
 
-  plug(Tesla.Middleware.JSON)
   plug(EOSRPC.Middleware.Error)
+  plug(Tesla.Middleware.JSON)
 
   @doc """
   Retrieve a transaction from the blockchain.

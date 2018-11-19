@@ -10,8 +10,8 @@ defmodule EOSRPC.Wallet do
 
   import EOSRPC
 
-  plug(Tesla.Middleware.JSON)
   plug(EOSRPC.Middleware.Error)
+  plug(Tesla.Middleware.JSON)
 
   @doc """
   List all wallets
