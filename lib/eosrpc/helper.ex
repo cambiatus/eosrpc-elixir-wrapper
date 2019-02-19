@@ -10,6 +10,9 @@ defmodule EOSRPC.Helper do
   on your daily basis
   """
 
+  @callback new_account(creator :: binary, new_account :: binary, owner_key :: binary, active_key :: binary) :: any
+  @callback auto_push(actions :: [any]) :: any
+
   alias EOSRPC.Chain
   alias EOSRPC.Wallet
 
