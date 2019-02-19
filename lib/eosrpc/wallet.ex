@@ -6,6 +6,10 @@ defmodule EOSRPC.Wallet do
   https://github.com/EOSIO/eos/blob/master/plugins/wallet_api_plugin/wallet_api_plugin.cpp
   """
 
+  @callback unlock() :: any
+  @callback sign_transaction(transaction :: any, keys ::any) :: any
+  @callback url(url :: binary) :: binary
+
   use Tesla
 
   import EOSRPC
