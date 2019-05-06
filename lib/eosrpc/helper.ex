@@ -121,6 +121,28 @@ defmodule EOSRPC.Helper do
           active: active,
           owner: owner
         }
+      },
+      %{
+        account: "eosio",
+        name: "buyram",
+        authorization: [authorization],
+        data: %{
+          payer: creator,
+          receiver: new_account,
+          quant: "10.0000 EOS"
+        }
+      },
+      %{
+        account: "eosio",
+        name: "delegatebw",
+        authorization: [authorization],
+        data: %{
+          from: creator,
+          receiver: new_account,
+          stake_net_quantity: "10.0000 EOS",
+          stake_cpu_quantity: "10.0000 EOS",
+          transfer: 0
+        }
       }
     ]
 

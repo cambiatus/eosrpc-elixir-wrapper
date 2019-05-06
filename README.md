@@ -12,7 +12,7 @@ Based on [EOS RPC Official Docs](https://developers.eos.io/eosio-nodeos/referenc
 ```elixir
 def deps do
   [
-    {:eosrpc, "~> 0.3.0"}
+    {:eosrpc, "~> 0.5.0"}
   ]
 end
 ```
@@ -62,4 +62,3 @@ For complete transactions signature and submission flow examples check `EOSRPC.H
 ## License
 
 This project is licensed under the GNU GPLv3 License - see the [LICENSE](LICENSE) file for details
-

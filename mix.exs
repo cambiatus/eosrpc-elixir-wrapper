@@ -4,7 +4,7 @@ defmodule EOSRPC.Mixfile do
   def project do
     [
       app: :eosrpc,
-      version: "0.4.6",
+      version: "0.5.0",
       elixir: "~> 1.5",
       start_permanent: Mix.env() == :prod,
       description: "Simple EOSRPC Wrapper for Elixir",
