@@ -10,7 +10,12 @@ defmodule EOSRPC.Helper do
   on your daily basis
   """
 
-  @callback new_account(creator :: binary, new_account :: binary, owner_key :: binary, active_key :: binary) :: any
+  @callback new_account(
+              creator :: binary,
+              new_account :: binary,
+              owner_key :: binary,
+              active_key :: binary
+            ) :: any
   @callback auto_push(actions :: [any]) :: any
 
   alias EOSRPC.Chain
@@ -129,7 +134,7 @@ defmodule EOSRPC.Helper do
         data: %{
           payer: creator,
           receiver: new_account,
-          quant: "10.0000 EOS"
+          quant: "10.0000 #{symbol()}"
         }
       },
       %{
@@ -139,8 +144,8 @@ defmodule EOSRPC.Helper do
         data: %{
           from: creator,
           receiver: new_account,
-          stake_net_quantity: "10.0000 EOS",
-          stake_cpu_quantity: "10.0000 EOS",
+          stake_net_quantity: "10.0000 #{symbol()}",
+          stake_cpu_quantity: "10.0000 #{symbol()}",
           transfer: 0
         }
       }
@@ -182,5 +187,11 @@ defmodule EOSRPC.Helper do
       {:ok, final_actions} -> auto_push_bin(final_actions)
       error -> error
     end
+  end
+
+  def symbol() do
+    :eosrpc
+    |> Application.get_env(__MODULE__)
+    |> Keyword.get(:symbol)
   end
 end

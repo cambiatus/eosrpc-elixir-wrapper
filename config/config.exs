@@ -29,11 +29,15 @@ use Mix.Config
 #
 #     import_config "#{Mix.env}.exs"
 
-config :eosrpc, EOSRPC.Wallet,
-  url: "http://127.0.0.1:8999/v1/wallet"
+config :eosrpc, EOSRPC.Wallet, url: "http://127.0.0.1:8888/v1/wallet"
+# config :eosrpc, EOSRPC.Wallet,
+#   url: "http://127.0.0.1:8999/v1/wallet"
 
-config :eosrpc, EOSRPC.Chain,
-  url: "http://127.0.0.1:8888/v1/chain"
+config :eosrpc, EOSRPC.Chain, url: "https://eosio.bespiral.io/v1/chain"
+# config :eosrpc, EOSRPC.Chain, url: "http://127.0.0.1:8888/v1/chain"
 
 config :eosrpc, EOSRPC.History,
   url: "http://127.0.0.1:8888/v1/history"
+
+config :eosrpc, EOSRPC.Helper,
+  symbol: "EOS"
