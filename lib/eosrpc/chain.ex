@@ -4,6 +4,8 @@ defmodule EOSRPC.Chain do
 
   Based on: https://developers.eos.io/eosio-nodeos/v1.2.0/reference on Chain section
   """
+  
+  @callback get_account(account_name :: binary) :: any
 
   use Tesla
 
