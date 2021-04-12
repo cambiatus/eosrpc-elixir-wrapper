@@ -4,7 +4,7 @@ defmodule EOSRPC.Chain do
 
   Based on: https://developers.eos.io/eosio-nodeos/v1.2.0/reference on Chain section
   """
-  
+
   @callback get_account(account_name :: binary) :: any
 
   use Tesla
@@ -48,6 +48,7 @@ defmodule EOSRPC.Chain do
   def get_code(account_name) do
     "/get_code" |> url() |> post(%{account_name: account_name})
   end
+
   def get_code!(account_name) do
     unwrap_or_raise(get_code(account_name))
   end
@@ -56,18 +57,21 @@ defmodule EOSRPC.Chain do
   Fetch smart contract data from an account.
   """
   def get_table_rows(contract, scope, table, json \\ true)
+
   def get_table_rows(contract, scope, table, json) do
     data = %{
       scope: scope,
       code: contract,
       table: table,
       json: json,
-      limit: 1_000,
+      limit: 1_000
     }
 
     "/get_table_rows" |> url() |> post(data)
   end
+
   def get_table_rows!(contract, scope, table, json \\ true)
+
   def get_table_rows!(contract, scope, table, json) do
     unwrap_or_raise(get_table_rows(contract, scope, table, json))
   end
@@ -83,6 +87,7 @@ defmodule EOSRPC.Chain do
 
     "/get_required_keys" |> url() |> post(data)
   end
+
   def get_required_keys!(transaction_data, available_keys) do
     unwrap_or_raise(get_required_keys(transaction_data, available_keys))
   end
@@ -94,6 +99,7 @@ defmodule EOSRPC.Chain do
   def abi_json_to_bin(code, action, args) do
     "/abi_json_to_bin" |> url() |> post(%{code: code, action: action, args: args})
   end
+
   def abi_json_to_bin!(code, action, args) do
     unwrap_or_raise(abi_json_to_bin(code, action, args))
   end
@@ -104,6 +110,7 @@ defmodule EOSRPC.Chain do
   def abi_bin_to_json(code, action, binargs) do
     "/abi_bin_to_json" |> url() |> post(%{code: code, action: action, binargs: binargs})
   end
+
   def abi_bin_to_json!(code, action, binargs) do
     unwrap_or_raise(abi_bin_to_json(code, action, binargs))
   end
@@ -148,6 +155,7 @@ defmodule EOSRPC.Chain do
   def push_transaction(signed_transaction) do
     "/push_transaction" |> url() |> post(signed_transaction)
   end
+
   def push_transaction!(signed_transaction) do
     unwrap_or_raise(push_transaction(signed_transaction))
   end
@@ -155,6 +163,7 @@ defmodule EOSRPC.Chain do
   def push_transactions(signed_transactions) do
     "/push_transactions" |> url() |> post(signed_transactions)
   end
+
   def push_transactions!(signed_transactions) do
     unwrap_or_raise(push_transaction(signed_transactions))
   end
